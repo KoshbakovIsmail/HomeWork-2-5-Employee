@@ -2,7 +2,6 @@ package pro.isa.EmployeerBook.Server.Controller;
 
 import org.springframework.web.bind.annotation.*;
 import pro.isa.EmployeerBook.Server.Employeer.Employeer;
-
 import java.util.List;
 
 @RestController

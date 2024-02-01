@@ -1,7 +1,6 @@
 package pro.isa.EmployeerBook.Server.Controller;
 
 import pro.isa.EmployeerBook.Server.Employeer.Employeer;
-
 import java.util.List;
 
 public interface EmployeerServer {
