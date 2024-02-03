@@ -5,7 +5,9 @@ import pro.isa.EmployeerBook.Server.Employeer.Employeer;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeAlredyAddedException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeNotFoundException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeStrongeIsFullException;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -18,12 +20,13 @@ public class EmployeerServerIplm implements EmployeerServer {
     private static final int MAX_EMPLOYEES = 5;
 
     @Override
-    public Employeer addEmployee(Employeer employeer) throws EmployeeStrongeIsFullException, EmployeeAlredyAddedException {
+    public Employeer addEmployee(String firstname, String lastname) {
+        Employeer employeer = new Employeer(firstname, lastname);
         if (employeers.size() >= MAX_EMPLOYEES) {
-            throw new EmployeeStrongeIsFullException("Employee stronge is full");
+            throw new EmployeeStrongeIsFullException();
         }
         if (employeers.contains(employeer)) {
-            throw new EmployeeAlredyAddedException("Employee already exists");
+            throw new EmployeeAlredyAddedException();
         }
         employeers.add(employeer);
         return employeer;
@@ -31,27 +34,30 @@ public class EmployeerServerIplm implements EmployeerServer {
     }
 
     @Override
-    public Employeer removeEmployee(Employeer employeer) throws EmployeeNotFoundException {
+    public Employeer removeEmployee(String firstname, String lastname) {
+        Employeer employeer = new Employeer(firstname, lastname);
         if (!employeers.remove(employeer)) {
-            throw new EmployeeNotFoundException("Employee not found");
+            throw new EmployeeNotFoundException();
         }
         return employeer;
     }
 
     @Override
-    public Employeer findEmployee(Employeer employeerToFind) throws EmployeeNotFoundException {
-        for (Employeer employeer : employeers) {
-            if (employeer.getFirstName().equals(employeerToFind.getFirstName()) &&
-                    employeer.getLastName().equals(employeerToFind.getLastName())) {
-                return employeer;
-            }
+    public Employeer findEmployee(String firstName, String lastName) {
+        Employeer target = new Employeer(firstName, lastName);
+        int targetIndex = employeers.indexOf(target);
+        if (targetIndex < 0) {
+            throw new EmployeeNotFoundException();
         }
-        throw new EmployeeNotFoundException("Employee not found");
+        return employeers.get(targetIndex);
+
     }
 
     @Override
     public List<Employeer> getEmployeers() {
-        return new ArrayList<>(employeers);
+        //return new ArrayList<>(employeers);
+        return Collections.unmodifiableList(employeers);
+
     }
 
 }

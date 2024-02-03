@@ -4,11 +4,11 @@ import pro.isa.EmployeerBook.Server.Employeer.Employeer;
 import java.util.List;
 
 public interface EmployeerServer {
-    Employeer addEmployee(Employeer employeer);
+    Employeer addEmployee(String firstName, String lastName);
 
-    Employeer removeEmployee(Employeer employeer);
+    Employeer removeEmployee(String firstName, String lastName);
 
-    public Employeer findEmployee(Employeer employeerToFind);
+    public Employeer findEmployee(String firstName, String lastName);
 
     List<Employeer> getEmployeers();
 }
