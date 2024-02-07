@@ -34,19 +34,20 @@ public class EmployeerServerIplm implements EmployeerServer {
     @Override
     public Employeer removeEmployee(String firstname, String lastname) {
         Employeer employeer = new Employeer(firstname, lastname);
-        if (!employeers.containsKey(firstname)) {
-            throw new EmployeeNotFoundException();
+        if (employeers.containsKey(firstname)) {
+            return employeers.remove(firstname);
         }
-        return employeers.remove(firstname);
+        throw new EmployeeNotFoundException();
     }
 
     @Override
     public Employeer findEmployee(String firstName, String lastName) {
         Employeer employeer = employeers.get(firstName);
-        if (employeer == null || !employeer.getLastName().equals(lastName)) {
-            throw new EmployeeNotFoundException();
+
+        if (employeers.containsKey(firstName)) {
+            return employeer;
         }
-        return employeer;
+        throw new EmployeeNotFoundException();
     }
 
     @Override
