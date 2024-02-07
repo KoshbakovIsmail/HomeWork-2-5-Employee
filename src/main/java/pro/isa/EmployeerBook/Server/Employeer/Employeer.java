@@ -1,5 +1,4 @@
 package pro.isa.EmployeerBook.Server.Employeer;
-
 public class Employeer {
     private String firstName;
     private String lastName;
@@ -40,9 +39,8 @@ public class Employeer {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return "Employee:" +
+                "firstName = " + firstName +
+                " lastName = " + lastName;
     }
 }
