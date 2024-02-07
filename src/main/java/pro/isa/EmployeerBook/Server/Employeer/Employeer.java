@@ -1,5 +1,4 @@
 package pro.isa.EmployeerBook.Server.Employeer;
-
 public class Employeer {
     private String firstName;
     private String lastName;
