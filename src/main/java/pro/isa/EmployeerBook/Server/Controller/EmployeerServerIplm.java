@@ -11,15 +11,17 @@ import java.util.*;
 @Service
 public class EmployeerServerIplm implements EmployeerServer {
     private final Map<String, Employeer> employeers = new HashMap(Map.of(
-            "Jonni",new Employeer("Jonni", "Dep"),
-            "Anna", new Employeer("Anna", "Li"),
-            "Isken", new Employeer("Isken", "Kim")
+            "Jonni",new Employeer("Jonni", "Dep", 1, 1500.45),
+            "Anna", new Employeer("Anna", "Li",3,16780.15),
+            "Isken", new Employeer("Isken", "Kim",2,14560.23),
+            "Roy", new Employeer("Roy", "Jon", 2, 11578.45),
+            "Kim", new Employeer("Kim","Lu", 2, 18554.12)
     ));
-    private static final int MAX_EMPLOYEES = 5;
+    private static final int MAX_EMPLOYEES = 10;
 
     @Override
-    public Employeer addEmployee(String firstname, String lastname) {
-        Employeer employeer = new Employeer(firstname, lastname);
+    public Employeer addEmployee(String firstname, String lastname, int department, double salary) {
+        Employeer employeer = new Employeer(firstname, lastname, department, salary);
         if (employeers.size() >= MAX_EMPLOYEES) {
             throw new EmployeeStrongeIsFullException();
         }
@@ -32,8 +34,8 @@ public class EmployeerServerIplm implements EmployeerServer {
     }
 
     @Override
-    public Employeer removeEmployee(String firstname, String lastname) {
-        Employeer employeer = new Employeer(firstname, lastname);
+    public Employeer removeEmployee(String firstname, String lastname, int department, double salary) {
+        Employeer employeer = new Employeer(firstname, lastname, department, salary);
         if (employeers.containsKey(firstname)) {
             return employeers.remove(firstname);
         }
@@ -41,7 +43,7 @@ public class EmployeerServerIplm implements EmployeerServer {
     }
 
     @Override
-    public Employeer findEmployee(String firstName, String lastName) {
+    public Employeer findEmployee(String firstName, String lastName, int department, double salary) {
         Employeer employeer = employeers.get(firstName);
 
         if (employeers.containsKey(firstName)) {

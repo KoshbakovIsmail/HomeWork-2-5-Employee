@@ -2,10 +2,14 @@ package pro.isa.EmployeerBook.Server.Employeer;
 public class Employeer {
     private String firstName;
     private String lastName;
+    private int department;
+    private double salary;
 
-    public Employeer(String firstName, String lastName) {
+    public Employeer(String firstName, String lastName, int department, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.department = department;
+        this.salary = salary;
     }
 
     public String getFirstName() {
@@ -24,6 +28,20 @@ public class Employeer {
         this.lastName = lastName;
     }
 
+    public int getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(int department) {
+        this.department = department;
+    }
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -41,6 +59,8 @@ public class Employeer {
     public String toString() {
         return "Employee:"  +
                 "firstName = " + firstName +
-                " lastName = " + lastName;
+                " lastName = " + lastName +
+                " department = " + department +
+                " salary = " + salary;
     }
 }

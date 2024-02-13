@@ -8,7 +8,7 @@ import pro.isa.EmployeerBook.Server.Exception.EmployeeAlredyAddedException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeNotFoundException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeStrongeIsFullException;
 
-import java.util.Collection;
+
 import java.util.Map;
 
 @RestController
@@ -37,23 +37,32 @@ public class EmployeerController {
 
 
     @GetMapping("/add")
-    public Employeer addEmployee(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname) {
-        return employeerServer.addEmployee(firstname, lastname);
+    public Employeer addEmployee(@RequestParam("firstname") String firstname,
+                                 @RequestParam("lastname") String lastname,
+                                 @RequestParam("department") int department,
+                                 @RequestParam("salary") double salary) {
+        return employeerServer.addEmployee(firstname, lastname, department, salary);
     }
 
     @GetMapping("/remove")
-    public Employeer removeEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
-        return employeerServer.removeEmployee(firstName, lastName);
+    public Employeer removeEmployee(@RequestParam("firstname") String firstName,
+                                    @RequestParam("lastname") String lastName,
+                                    @RequestParam("depaertment") int department,
+                                    @RequestParam("salary") double salary) {
+        return employeerServer.removeEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping("/find")
-    public Employeer findEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
-        return employeerServer.findEmployee(firstName, lastName);
+    public Employeer findEmployee(@RequestParam("firstname") String firstName,
+                                  @RequestParam("lastname") String lastName,
+                                  @RequestParam("depaertment") int department,
+                                  @RequestParam("salary") double salary) {
+        return employeerServer.findEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping("/last")
     public Map<String, Employeer> getEmployees() {
-        return  employeerServer.getEmployeers();
+        return employeerServer.getEmployeers();
     }
 }
 
