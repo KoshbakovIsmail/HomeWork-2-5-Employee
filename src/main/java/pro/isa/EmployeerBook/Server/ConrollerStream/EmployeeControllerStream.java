@@ -1,4 +1,4 @@
-package pro.isa.EmployeerBook.Server.Controller;
+package pro.isa.EmployeerBook.Server.ConrollerStream;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,4 +37,5 @@ public class EmployeeControllerStream {
     public Map<Integer, List<Employeer>> printTheEntireListByDepartment() {
         return employeeServerStream.findAllEmployeeByDepartmentList();
     }
+
 }
