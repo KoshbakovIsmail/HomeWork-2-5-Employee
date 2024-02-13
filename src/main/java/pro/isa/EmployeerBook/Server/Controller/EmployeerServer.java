@@ -1,6 +1,7 @@
 package pro.isa.EmployeerBook.Server.Controller;
 import pro.isa.EmployeerBook.Server.Employeer.Employeer;
-import java.util.List;
+
+import java.util.Map;
 
 public interface EmployeerServer {
     Employeer addEmployee(String firstName, String lastName);
@@ -9,5 +10,5 @@ public interface EmployeerServer {
 
     public Employeer findEmployee(String firstName, String lastName);
 
-    List<Employeer> getEmployeers();
+    Map<String, Employeer> getEmployeers();
 }

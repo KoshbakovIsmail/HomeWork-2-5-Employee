@@ -7,7 +7,9 @@ import pro.isa.EmployeerBook.Server.Employeer.Employeer;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeAlredyAddedException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeNotFoundException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeStrongeIsFullException;
-import java.util.List;
+
+import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
@@ -50,8 +52,8 @@ public class EmployeerController {
     }
 
     @GetMapping("/last")
-    public List<Employeer> getEmployees() {
-        return employeerServer.getEmployeers();
+    public Map<String, Employeer> getEmployees() {
+        return  employeerServer.getEmployeers();
     }
 }
 

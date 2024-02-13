@@ -5,16 +5,15 @@ import pro.isa.EmployeerBook.Server.Employeer.Employeer;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeAlredyAddedException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeNotFoundException;
 import pro.isa.EmployeerBook.Server.Exception.EmployeeStrongeIsFullException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import java.util.*;
 
 @Service
 public class EmployeerServerIplm implements EmployeerServer {
-    private final List<Employeer> employeers = new ArrayList<>(List.of(
-            new Employeer("Jonni", "Dep"),
-            new Employeer("Anna", "Li"),
-            new Employeer("Isken", "Kim")
+    private final Map<String, Employeer> employeers = new HashMap(Map.of(
+            "Jonni",new Employeer("Jonni", "Dep"),
+            "Anna", new Employeer("Anna", "Li"),
+            "Isken", new Employeer("Isken", "Kim")
     ));
     private static final int MAX_EMPLOYEES = 5;
 
@@ -24,10 +23,10 @@ public class EmployeerServerIplm implements EmployeerServer {
         if (employeers.size() >= MAX_EMPLOYEES) {
             throw new EmployeeStrongeIsFullException();
         }
-        if (employeers.contains(employeer)) {
+        if (employeers.containsKey(firstname)) {
             throw new EmployeeAlredyAddedException();
         }
-        employeers.add(employeer);
+        employeers.put(firstname, employeer);
         return employeer;
 
     }
@@ -35,27 +34,25 @@ public class EmployeerServerIplm implements EmployeerServer {
     @Override
     public Employeer removeEmployee(String firstname, String lastname) {
         Employeer employeer = new Employeer(firstname, lastname);
-        if (!employeers.remove(employeer)) {
-            throw new EmployeeNotFoundException();
+        if (employeers.containsKey(firstname)) {
+            return employeers.remove(firstname);
         }
-        return employeer;
+        throw new EmployeeNotFoundException();
     }
 
     @Override
     public Employeer findEmployee(String firstName, String lastName) {
-        Employeer target = new Employeer(firstName, lastName);
-        int targetIndex = employeers.indexOf(target);
-        if (targetIndex < 0) {
-            throw new EmployeeNotFoundException();
-        }
-        return employeers.get(targetIndex);
+        Employeer employeer = employeers.get(firstName);
 
+        if (employeers.containsKey(firstName)) {
+            return employeer;
+        }
+        throw new EmployeeNotFoundException();
     }
 
     @Override
-    public List<Employeer> getEmployeers() {
-        //return new ArrayList<>(employeers);
-        return Collections.unmodifiableList(employeers);
+    public Map<String, Employeer> getEmployeers() {
+        return new HashMap<>(employeers);
 
     }
 
