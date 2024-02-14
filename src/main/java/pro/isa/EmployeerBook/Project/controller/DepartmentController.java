@@ -13,30 +13,30 @@ import java.util.Map;
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
-    private final DepartmentService employeeServerStream;
+    private final DepartmentService departmentService;
 
-    public DepartmentController(DepartmentService employeeServerStream) {
-        this.employeeServerStream = employeeServerStream;
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
     }
 
     @GetMapping(path = "/maxSalary")
     public Employeer findEmployeeWithMaxSalaryByDepartment(@RequestParam("departmentNumber") int departmentNumber) {
-        return employeeServerStream.findEmployeeWithMaxSalaryByDepartment(departmentNumber);
+        return departmentService.findEmployeeWithMaxSalaryByDepartment(departmentNumber);
     }
 
     @GetMapping(path = "/minSalary")
     public Employeer findEmployeeWithMinSalaryByDepartment(@RequestParam("departmentNumber") int departmentNumber) {
-        return employeeServerStream.findEmployeeWithMinSalaryByDepartment(departmentNumber);
+        return departmentService.findEmployeeWithMinSalaryByDepartment(departmentNumber);
     }
 
     @GetMapping(path = "/printDepartmentList")
     public List<Employeer> printDepartmentList(@RequestParam("departmentNumber") int departmentNumber) {
-        return employeeServerStream.findEmployeeByDepartment(departmentNumber);
+        return departmentService.findEmployeeByDepartment(departmentNumber);
     }
 
     @GetMapping(path = "/printTheListByDepartment")
     public Map<Integer, List<Employeer>> printTheEntireListByDepartment() {
-        return employeeServerStream.findAllEmployeeByDepartmentList();
+        return departmentService.findAllEmployeeByDepartmentList();
     }
 
 }

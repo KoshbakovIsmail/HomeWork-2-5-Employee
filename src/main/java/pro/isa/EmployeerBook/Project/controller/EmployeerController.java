@@ -15,10 +15,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/employee")
 public class EmployeerController {
-    private final EmployeerService employeerServer;
+    private final EmployeerService employeerService;
 
-    public EmployeerController(EmployeerService personServer) {
-        this.employeerServer = personServer;
+    public EmployeerController(EmployeerService employeerService) {
+        this.employeerService = employeerService;
     }
 
     @ExceptionHandler(EmployeeNotFoundException.class)
@@ -42,7 +42,7 @@ public class EmployeerController {
                                  @RequestParam("lastname") String lastname,
                                  @RequestParam("department") int department,
                                  @RequestParam("salary") double salary) {
-        return employeerServer.addEmployee(firstname, lastname, department, salary);
+        return employeerService.addEmployee(firstname, lastname, department, salary);
     }
 
     @DeleteMapping("/remove")
@@ -50,7 +50,7 @@ public class EmployeerController {
                                     @RequestParam("lastname") String lastName,
                                     @RequestParam("depaertment") int department,
                                     @RequestParam("salary") double salary) {
-        return employeerServer.removeEmployee(firstName, lastName, department, salary);
+        return employeerService.removeEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping("/find")
@@ -58,12 +58,12 @@ public class EmployeerController {
                                   @RequestParam("lastname") String lastName,
                                   @RequestParam("depaertment") int department,
                                   @RequestParam("salary") double salary) {
-        return employeerServer.findEmployee(firstName, lastName, department, salary);
+        return employeerService.findEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping("/last")
     public Map<String, Employeer> getEmployees() {
-        return employeerServer.getEmployeers();
+        return employeerService.getEmployeers();
     }
 }
 
