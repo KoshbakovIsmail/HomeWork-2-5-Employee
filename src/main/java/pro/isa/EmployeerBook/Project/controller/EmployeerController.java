@@ -37,7 +37,7 @@ public class EmployeerController {
     }
 
 
-    @PostMapping("/add")
+    @GetMapping("/add")
     public Employeer addEmployee(@RequestParam("firstname") String firstname,
                                  @RequestParam("lastname") String lastname,
                                  @RequestParam("department") int department,
