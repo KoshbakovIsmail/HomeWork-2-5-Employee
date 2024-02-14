@@ -1,9 +1,10 @@
-package pro.isa.EmployeerBook.Server.ConrollerStream;
+package pro.isa.EmployeerBook.Project.serviceImpl;
 
 import org.springframework.stereotype.Service;
-import pro.isa.EmployeerBook.Server.Controller.EmployeerServer;
-import pro.isa.EmployeerBook.Server.Employeer.Employeer;
-import pro.isa.EmployeerBook.Server.Exception.EmployeeNotFoundException;
+import pro.isa.EmployeerBook.Project.service.DepartmentService;
+import pro.isa.EmployeerBook.Project.service.EmployeerService;
+import pro.isa.EmployeerBook.Project.model.Employeer;
+import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
 
 import java.util.List;
 import java.util.Comparator;
@@ -11,10 +12,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeServerStreamImpl implements EmployeeServerStream {
-    private final EmployeerServer employeerServer;
+public class DepartmentServiceImpl implements DepartmentService {
+    private final EmployeerService employeerServer;
 
-    public EmployeeServerStreamImpl(EmployeerServer employeerServer) {
+    public DepartmentServiceImpl(EmployeerService employeerServer) {
         this.employeerServer = employeerServer;
     }
 

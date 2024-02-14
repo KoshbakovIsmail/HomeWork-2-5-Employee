@@ -1,4 +1,5 @@
-package pro.isa.EmployeerBook.Server.Employeer;
+package pro.isa.EmployeerBook.Project.model;
+
 public class Employeer {
     private String firstName;
     private String lastName;
@@ -35,6 +36,7 @@ public class Employeer {
     public void setDepartment(int department) {
         this.department = department;
     }
+
     public double getSalary() {
         return salary;
     }
@@ -42,22 +44,26 @@ public class Employeer {
     public void setSalary(double salary) {
         this.salary = salary;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Employeer employee = (Employeer) obj;
-        return firstName.equals(employee.firstName) && lastName.equals(employee.lastName);
+        Employeer employeer = (Employeer) obj;
+        return firstName.equals(employeer.firstName) &&
+                lastName.equals(employeer.lastName) &&
+                department == employeer.department &&
+                Double.compare(employeer.salary, salary) == 0;
     }
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(firstName, lastName);
+        return java.util.Objects.hash(firstName, lastName, department, salary);
     }
 
     @Override
     public String toString() {
-        return "Employee:"  +
+        return "Employee:" +
                 "firstName = " + firstName +
                 " lastName = " + lastName +
                 " department = " + department +

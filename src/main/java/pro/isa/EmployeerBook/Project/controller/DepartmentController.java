@@ -1,20 +1,21 @@
-package pro.isa.EmployeerBook.Server.ConrollerStream;
+package pro.isa.EmployeerBook.Project.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pro.isa.EmployeerBook.Server.Employeer.Employeer;
+import pro.isa.EmployeerBook.Project.model.Employeer;
+import pro.isa.EmployeerBook.Project.service.DepartmentService;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/Employee")
-public class EmployeeControllerStream {
-    private final EmployeeServerStream employeeServerStream;
+@RequestMapping("/department")
+public class DepartmentController {
+    private final DepartmentService employeeServerStream;
 
-    public EmployeeControllerStream(EmployeeServerStream employeeServerStream) {
+    public DepartmentController(DepartmentService employeeServerStream) {
         this.employeeServerStream = employeeServerStream;
     }
 

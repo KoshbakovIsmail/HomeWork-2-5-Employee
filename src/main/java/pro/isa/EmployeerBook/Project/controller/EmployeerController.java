@@ -1,12 +1,13 @@
-package pro.isa.EmployeerBook.Server.Controller;
+package pro.isa.EmployeerBook.Project.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.isa.EmployeerBook.Server.Employeer.Employeer;
-import pro.isa.EmployeerBook.Server.Exception.EmployeeAlredyAddedException;
-import pro.isa.EmployeerBook.Server.Exception.EmployeeNotFoundException;
-import pro.isa.EmployeerBook.Server.Exception.EmployeeStrongeIsFullException;
+import pro.isa.EmployeerBook.Project.model.Employeer;
+import pro.isa.EmployeerBook.Project.exception.EmployeeAlredyAddedException;
+import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
+import pro.isa.EmployeerBook.Project.exception.EmployeeStrongeIsFullException;
+import pro.isa.EmployeerBook.Project.service.EmployeerService;
 
 
 import java.util.Map;
@@ -14,9 +15,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/employee")
 public class EmployeerController {
-    private final EmployeerServer employeerServer;
+    private final EmployeerService employeerServer;
 
-    public EmployeerController(EmployeerServer personServer) {
+    public EmployeerController(EmployeerService personServer) {
         this.employeerServer = personServer;
     }
 
@@ -36,7 +37,7 @@ public class EmployeerController {
     }
 
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     public Employeer addEmployee(@RequestParam("firstname") String firstname,
                                  @RequestParam("lastname") String lastname,
                                  @RequestParam("department") int department,
@@ -44,7 +45,7 @@ public class EmployeerController {
         return employeerServer.addEmployee(firstname, lastname, department, salary);
     }
 
-    @GetMapping("/remove")
+    @DeleteMapping("/remove")
     public Employeer removeEmployee(@RequestParam("firstname") String firstName,
                                     @RequestParam("lastname") String lastName,
                                     @RequestParam("depaertment") int department,
