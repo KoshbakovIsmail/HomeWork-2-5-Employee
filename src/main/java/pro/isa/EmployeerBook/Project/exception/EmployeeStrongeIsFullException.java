@@ -1,4 +1,4 @@
-package pro.isa.EmployeerBook.Server.Exception;
+package pro.isa.EmployeerBook.Project.exception;
 
 public class EmployeeStrongeIsFullException extends RuntimeException {
 

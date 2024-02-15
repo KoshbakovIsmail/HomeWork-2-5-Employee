@@ -1,4 +1,4 @@
-package pro.isa.EmployeerBook.Server;
+package pro.isa.EmployeerBook.Project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
