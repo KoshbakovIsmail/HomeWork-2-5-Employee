@@ -38,30 +38,18 @@ public class EmployeerController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Контейнер для сотрудников переполнен");
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<String> handleStronglsFull() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Неверные входные данные. В имени и фамилии разрешены только буквы алфавита");
-    }
-
-
     @GetMapping("/add")
     public Employeer addEmployee(@RequestParam("firstname") String firstname,
                                  @RequestParam("lastname") String lastname,
                                  @RequestParam("department") int department,
                                  @RequestParam("salary") double salary) {
-        if (!StringUtils.isAlpha(firstname) || !StringUtils.isAlpha(lastname)) {
-            throw new BadRequestException();
-        }
-        firstname = StringUtils.capitalize(firstname);
-        lastname = StringUtils.capitalize(lastname);
-        
         return employeerService.addEmployee(firstname, lastname, department, salary);
     }
 
     @DeleteMapping("/remove")
     public Employeer removeEmployee(@RequestParam("firstname") String firstName,
                                     @RequestParam("lastname") String lastName,
-                                    @RequestParam("depaertment") int department,
+                                    @RequestParam("department") int department,
                                     @RequestParam("salary") double salary) {
         return employeerService.removeEmployee(firstName, lastName, department, salary);
     }
@@ -69,7 +57,7 @@ public class EmployeerController {
     @GetMapping("/find")
     public Employeer findEmployee(@RequestParam("firstname") String firstName,
                                   @RequestParam("lastname") String lastName,
-                                  @RequestParam("depaertment") int department,
+                                  @RequestParam("department") int department,
                                   @RequestParam("salary") double salary) {
         return employeerService.findEmployee(firstName, lastName, department, salary);
     }
