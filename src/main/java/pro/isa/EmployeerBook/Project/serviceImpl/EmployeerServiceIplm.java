@@ -40,6 +40,7 @@ public class EmployeerServiceIplm implements EmployeerService {
     @Override
     public Employeer removeEmployee(String firstname, String lastname, int department, double salary) {
         Employeer employeer = new Employeer(firstname, lastname, department, salary);
+        validateInput(firstname, lastname);
         if (employeers.containsKey(firstname)) {
             return employeers.remove(firstname);
         }
@@ -49,7 +50,7 @@ public class EmployeerServiceIplm implements EmployeerService {
     @Override
     public Employeer findEmployee(String firstName, String lastName, int department, double salary) {
         Employeer employeer = employeers.get(firstName);
-
+        validateInput(firstName, lastName);
         if (employeers.containsKey(firstName)) {
             return employeer;
         }
