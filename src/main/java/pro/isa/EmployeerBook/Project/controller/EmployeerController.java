@@ -1,8 +1,10 @@
 package pro.isa.EmployeerBook.Project.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pro.isa.EmployeerBook.Project.exception.BadRequestException;
 import pro.isa.EmployeerBook.Project.model.Employeer;
 import pro.isa.EmployeerBook.Project.exception.EmployeeAlredyAddedException;
 import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
@@ -36,7 +38,6 @@ public class EmployeerController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Контейнер для сотрудников переполнен");
     }
 
-
     @GetMapping("/add")
     public Employeer addEmployee(@RequestParam("firstname") String firstname,
                                  @RequestParam("lastname") String lastname,
@@ -48,7 +49,7 @@ public class EmployeerController {
     @DeleteMapping("/remove")
     public Employeer removeEmployee(@RequestParam("firstname") String firstName,
                                     @RequestParam("lastname") String lastName,
-                                    @RequestParam("depaertment") int department,
+                                    @RequestParam("department") int department,
                                     @RequestParam("salary") double salary) {
         return employeerService.removeEmployee(firstName, lastName, department, salary);
     }
@@ -56,7 +57,7 @@ public class EmployeerController {
     @GetMapping("/find")
     public Employeer findEmployee(@RequestParam("firstname") String firstName,
                                   @RequestParam("lastname") String lastName,
-                                  @RequestParam("depaertment") int department,
+                                  @RequestParam("department") int department,
                                   @RequestParam("salary") double salary) {
         return employeerService.findEmployee(firstName, lastName, department, salary);
     }

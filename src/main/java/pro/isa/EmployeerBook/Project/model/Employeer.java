@@ -1,5 +1,7 @@
 package pro.isa.EmployeerBook.Project.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Employeer {
     private String firstName;
     private String lastName;
@@ -7,8 +9,8 @@ public class Employeer {
     private double salary;
 
     public Employeer(String firstName, String lastName, int department, double salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = StringUtils.capitalize(firstName);
+        this.lastName = StringUtils.capitalize(lastName);
         this.department = department;
         this.salary = salary;
     }

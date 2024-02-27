@@ -11,4 +11,6 @@ public interface EmployeerService {
     public Employeer findEmployee(String firstName, String lastName, int department, double salary);
 
     Map<String, Employeer> getEmployeers();
+
+    void validateInput(String firstName, String lastName);
 }

@@ -1,6 +1,8 @@
 package pro.isa.EmployeerBook.Project.serviceImpl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import pro.isa.EmployeerBook.Project.exception.BadRequestException;
 import pro.isa.EmployeerBook.Project.model.Employeer;
 import pro.isa.EmployeerBook.Project.exception.EmployeeAlredyAddedException;
 import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
@@ -23,6 +25,7 @@ public class EmployeerServiceIplm implements EmployeerService {
     @Override
     public Employeer addEmployee(String firstname, String lastname, int department, double salary) {
         Employeer employeer = new Employeer(firstname, lastname, department, salary);
+        validateInput(firstname, lastname);
         if (employeers.size() >= MAX_EMPLOYEES) {
             throw new EmployeeStrongeIsFullException();
         }
@@ -57,6 +60,13 @@ public class EmployeerServiceIplm implements EmployeerService {
     public Map<String, Employeer> getEmployeers() {
         return new HashMap<>(employeers);
 
+    }
+
+    @Override
+    public void validateInput(String firstName, String lastName) {
+        if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
+            throw new BadRequestException();
+        }
     }
 
 }
