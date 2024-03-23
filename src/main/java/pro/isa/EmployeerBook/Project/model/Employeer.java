@@ -1,16 +1,14 @@
 package pro.isa.EmployeerBook.Project.model;
 
-import org.apache.commons.lang3.StringUtils;
-
-public class Employeer {
+public class Employeer {;
     private String firstName;
     private String lastName;
     private int department;
     private double salary;
 
     public Employeer(String firstName, String lastName, int department, double salary) {
-        this.firstName = StringUtils.capitalize(firstName);
-        this.lastName = StringUtils.capitalize(lastName);
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.department = department;
         this.salary = salary;
     }
@@ -52,7 +50,7 @@ public class Employeer {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Employeer employeer = (Employeer) obj;
-        return firstName.equals(employeer.firstName) &&
+        return  firstName.equals(employeer.firstName) &&
                 lastName.equals(employeer.lastName) &&
                 department == employeer.department &&
                 Double.compare(employeer.salary, salary) == 0;

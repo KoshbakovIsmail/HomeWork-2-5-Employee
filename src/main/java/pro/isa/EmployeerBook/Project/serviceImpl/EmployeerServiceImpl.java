@@ -1,7 +1,7 @@
 package pro.isa.EmployeerBook.Project.serviceImpl;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import pro.isa.EmployeerBook.Project.exception.BadRequestException;
 import pro.isa.EmployeerBook.Project.model.Employeer;
 import pro.isa.EmployeerBook.Project.exception.EmployeeAlredyAddedException;
@@ -12,7 +12,7 @@ import pro.isa.EmployeerBook.Project.service.EmployeerService;
 import java.util.*;
 
 @Service
-public class EmployeerServiceIplm implements EmployeerService {
+public class EmployeerServiceImpl implements EmployeerService {
     private final Map<String, Employeer> employeers = new HashMap(Map.of(
             "Jonni", new Employeer("Jonni", "Dep", 1, 1500.45),
             "Anna", new Employeer("Anna", "Li", 3, 16780.15),
@@ -24,8 +24,10 @@ public class EmployeerServiceIplm implements EmployeerService {
 
     @Override
     public Employeer addEmployee(String firstname, String lastname, int department, double salary) {
-        Employeer employeer = new Employeer(firstname, lastname, department, salary);
         validateInput(firstname, lastname);
+        firstname = StringUtils.capitalize(firstname);
+        lastname = StringUtils.capitalize(lastname);
+        Employeer employeer = new Employeer(firstname, lastname, department, salary);
         if (employeers.size() >= MAX_EMPLOYEES) {
             throw new EmployeeStrongeIsFullException();
         }
