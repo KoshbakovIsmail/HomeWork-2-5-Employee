@@ -1,8 +1,5 @@
 package pro.isa.EmployeerBook;
 
-
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,23 +30,19 @@ public class DepartmentServiceImplTest {
     private final String expectedMessage = "Отдел с идентификатором " + errorId + " не найден";
     private final Employeer employeer1 = new Employeer("Jon", "Jons", 1, 1500.0);
     private final Employeer employeer2 = new Employeer("Sara", "Smit", 2, 1000.0);
-    private final Employeer employeer3 = new Employeer("Victor", "Ver", 1, 2500.0);
-    private final Employeer employeer4 = new Employeer("Ali", "Ali", 3, 2000.0);
+    private final Employeer employeer3 = new Employeer("Ali", "Alim", 3, 2000.0);
 
     final Map<String, Employeer> employeerMap = new HashMap<>(Map.of(
             "Jon", employeer1,
             "Sara", employeer2,
-            "Saha", employeer3,
-            "Ali", employeer4
+            "Ali", employeer3
     ));
 
-    final List<Employeer> emptyEmployeerList = new ArrayList<>();
     final List<Employeer> EmployeerList = new ArrayList<>();
 
 
     @Test
     public void testGetDepartmentList_FoundDep() {
-        EmployeerList.add(employeer3);
         EmployeerList.add(employeer1);
         when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMap);
         List<Employeer> actualEmployeeList = departmentServiceImpl.getDepartmentList(id);
@@ -99,7 +92,7 @@ public class DepartmentServiceImplTest {
 
     @Test
     public void testGetMaxSalaryDepartment_FoundMaxSalary() {
-        Double expectedMaxSum = employeer3.getSalary();
+        Double expectedMaxSum = employeer1.getSalary();
         when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMap);
         Double actualMaxSum = departmentServiceImpl.getMaxSalaryDepartment(id);
         assertEquals(expectedMaxSum, actualMaxSum);
@@ -120,26 +113,24 @@ public class DepartmentServiceImplTest {
     @Test
     public void testGetMinSalaryDepartment_FoundMinSalary() {
         Double expectedMinSum = employeer1.getSalary();
-            when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMap);
-            Double actualMinSum = departmentServiceImpl.getMinSalaryDepartment(id);
-            assertEquals(expectedMinSum, actualMinSum);
+        when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMap);
+        Double actualMinSum = departmentServiceImpl.getMinSalaryDepartment(id);
+        assertEquals(expectedMinSum, actualMinSum);
     }
 
     @Test
     public void testGetGroupListByDepartment_FoundGroupDep() {
         when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMap);
-        List<Employeer> employeerListDep1 = new ArrayList<>();
-        employeerListDep1.add(employeer1);
-        employeerListDep1.add(employeer3);
-        List<Employeer> employeerListDep2 = new ArrayList<>();
-        employeerListDep2.add(employeer2);
-        List<Employeer> employeerListDep3 = new ArrayList<>();
-        employeerListDep3.add(employeer4);
-
-        final Map<Integer, List<Employeer>> expectedDepGruopMap = new LinkedHashMap<>();
-        expectedDepGruopMap.put(1, employeerListDep1);
-        expectedDepGruopMap.put(2, employeerListDep2);
-        expectedDepGruopMap.put(3, employeerListDep3);
+        List<Employeer> employeerList1 = new ArrayList<>();
+        employeerList1.add(employeer1);
+        List<Employeer> employeerList2 = new ArrayList<>();
+        employeerList2.add(employeer2);
+        List<Employeer> employeerList3 = new ArrayList<>();
+        employeerList3.add(employeer3);
+        Map<Integer, List<Employeer>> expectedDepGruopMap = new HashMap<>();
+        expectedDepGruopMap.put(1, employeerList1);
+        expectedDepGruopMap.put(2, employeerList2);
+        expectedDepGruopMap.put(3, employeerList3);
 
         Map<Integer, List<Employeer>> actualDepartmentMap = departmentServiceImpl.getGroupListByDepartment();
 
