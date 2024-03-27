@@ -1,9 +1,11 @@
 package pro.isa.EmployeerBook.Project.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
+import pro.isa.EmployeerBook.Project.exception.DepartmentNotFoundException;
+import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
 import pro.isa.EmployeerBook.Project.model.Employeer;
 import pro.isa.EmployeerBook.Project.service.DepartmentService;
 
@@ -17,6 +19,36 @@ public class DepartmentController {
 
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
+    }
+
+    @ExceptionHandler(HttpStatusCodeException.class)
+    public String handleException(HttpStatusCodeException e) {
+       return "Code: " + e.getStatusCode() + ". Error: " + e.getMessage();
+        // return "Code: 404. Error: " + e.getMessage();
+    }
+    @GetMapping(path = "/{id}/employees")
+    public List<Employeer> getDepartmentList(@PathVariable("id") int id) {
+        return departmentService.getDepartmentList(id);
+    }
+
+    @GetMapping(path = "/{id}/salary/sum")
+    public Double getDepartmentSalarySum(@PathVariable("id") int id) {
+        return departmentService.getSumSalaryByDepartment(id);
+    }
+
+    @GetMapping(path = "/{id}/salary/max")
+    public Double getDepartnentMaxSalary(@PathVariable("id") int id) {
+        return departmentService.getMaxSalaryDepartment(id);
+    }
+
+    @GetMapping(path = "/{id}/salary/min")
+    public Double getDepartnentMinSalary(@PathVariable("id") int id) {
+        return departmentService.getMinSalaryDepartment(id);
+    }
+
+    @GetMapping(path = "/employees")
+    public Map<Integer, List<Employeer>> getGroupListByDepartment() {
+        return departmentService.getGroupListByDepartment();
     }
 
     @GetMapping(path = "/maxSalary")

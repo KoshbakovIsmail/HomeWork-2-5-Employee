@@ -1,10 +1,9 @@
 package pro.isa.EmployeerBook.Project.controller;
 
-import org.apache.commons.lang3.StringUtils;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pro.isa.EmployeerBook.Project.exception.BadRequestException;
 import pro.isa.EmployeerBook.Project.model.Employeer;
 import pro.isa.EmployeerBook.Project.exception.EmployeeAlredyAddedException;
 import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
