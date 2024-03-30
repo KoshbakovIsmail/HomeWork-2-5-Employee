@@ -1,11 +1,8 @@
 package pro.isa.EmployeerBook.Project.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
-import pro.isa.EmployeerBook.Project.exception.DepartmentNotFoundException;
-import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
 import pro.isa.EmployeerBook.Project.model.Employeer;
 import pro.isa.EmployeerBook.Project.service.DepartmentService;
 
@@ -23,9 +20,9 @@ public class DepartmentController {
 
     @ExceptionHandler(HttpStatusCodeException.class)
     public String handleException(HttpStatusCodeException e) {
-       return "Code: " + e.getStatusCode() + ". Error: " + e.getMessage();
-        // return "Code: 404. Error: " + e.getMessage();
+        return "Code: " + e.getStatusCode() + ". Error: " + e.getMessage();
     }
+
     @GetMapping(path = "/{id}/employees")
     public List<Employeer> getDepartmentList(@PathVariable("id") int id) {
         return departmentService.getDepartmentList(id);

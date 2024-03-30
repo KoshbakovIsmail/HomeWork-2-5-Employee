@@ -1,6 +1,7 @@
 package pro.isa.EmployeerBook.Project.model;
 
-public class Employeer {;
+public class Employeer {
+    ;
     private String firstName;
     private String lastName;
     private int department;
@@ -50,7 +51,7 @@ public class Employeer {;
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Employeer employeer = (Employeer) obj;
-        return  firstName.equals(employeer.firstName) &&
+        return firstName.equals(employeer.firstName) &&
                 lastName.equals(employeer.lastName) &&
                 department == employeer.department &&
                 Double.compare(employeer.salary, salary) == 0;
