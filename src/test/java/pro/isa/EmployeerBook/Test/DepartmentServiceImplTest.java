@@ -1,4 +1,4 @@
-package pro.isa.EmployeerBook;
+package pro.isa.EmployeerBook.Test;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +11,8 @@ import pro.isa.EmployeerBook.Project.serviceImpl.DepartmentServiceImpl;
 import pro.isa.EmployeerBook.Project.serviceImpl.EmployeerServiceImpl;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -24,13 +26,13 @@ public class DepartmentServiceImplTest {
     @InjectMocks
     private DepartmentServiceImpl departmentServiceImpl;
 
-
     private final int id = 1;
     private final int errorId = 15;
     private final String expectedMessage = "Отдел с идентификатором " + errorId + " не найден";
     private final Employeer employeer1 = new Employeer("Jon", "Jons", 1, 1500.0);
     private final Employeer employeer2 = new Employeer("Sara", "Smit", 2, 1000.0);
     private final Employeer employeer3 = new Employeer("Ali", "Alim", 3, 2000.0);
+    private final Employeer employeer4 = new Employeer("Isa", "Kim", 2, 1600);
 
     final Map<String, Employeer> employeerMap = new HashMap<>(Map.of(
             "Jon", employeer1,
@@ -38,6 +40,12 @@ public class DepartmentServiceImplTest {
             "Ali", employeer3
     ));
 
+    final Map<String, Employeer> employeerMapGroup = new HashMap<>(Map.of(
+            "Jon", employeer1,
+            "Sara", employeer2,
+            "Ali", employeer3,
+            "Isa", employeer4
+    ));
     final List<Employeer> EmployeerList = new ArrayList<>();
 
 
@@ -57,10 +65,6 @@ public class DepartmentServiceImplTest {
         when(employeerServiceImpl.getEmployeers()).thenThrow(new DepartmentNotFoundException(expectedMessage));
         Exception exception = assertThrows(DepartmentNotFoundException.class,
                 () -> departmentServiceImpl.getDepartmentList(errorId));
-
-        //assertEquals(expectedMessage,exception.getMessage());
-        // не смог решить проблему 404 код статуса ошибки выходить в actual,
-        // даже когда пишу 404 она выходит а дублированном виде. Почему не смог понять?
 
         assertTrue(exception.getMessage().matches(".*" + expectedMessage + ".*"));
     }
@@ -137,4 +141,69 @@ public class DepartmentServiceImplTest {
         assertEquals(expectedDepGruopMap, actualDepartmentMap);
     }
 
+    @Test
+    public void testGetGroupListByDepartment_FoundGroupDep2() {
+        when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMapGroup);
+        Map<Integer, List<Employeer>> expGroupMap = employeerMapGroup.values().stream()
+                .collect(Collectors.groupingBy(Employeer::getDepartment));
+        Map<Integer, List<Employeer>> actualGruop = departmentServiceImpl.getGroupListByDepartment();
+        assertEquals(expGroupMap, actualGruop);
+
+    }
+
+    @Test
+    public void testFindEmployeeWithMaxSalaryByDepartment() {
+        when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMapGroup);
+
+        Employeer expEmployeerMax = employeerMapGroup.entrySet().stream()
+                .filter(entry -> entry.getValue().getDepartment() == id)
+                .max(Comparator.comparingDouble(entry -> entry.getValue().getSalary()))
+                .map(entry -> new Employeer(
+                        entry.getValue().getFirstName()
+                        , entry.getValue().getLastName()
+                        , entry.getValue().getDepartment()
+                        , entry.getValue().getSalary()))
+                .orElseThrow(() -> new DepartmentNotFoundException("Отдел с идентификатором " + id + " не найден"));
+
+        Employeer actualEmployeer = departmentServiceImpl.findEmployeeWithMaxSalaryByDepartment(id);
+        assertEquals(expEmployeerMax, actualEmployeer);
+    }
+
+    @Test
+    public void testFindEmployeeWithMinSalaryByDepartment() {
+        when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMapGroup);
+
+        Employeer expEmployeerMin = employeerMapGroup.entrySet().stream()
+                .filter(entry -> entry.getValue().getDepartment() == id)
+                .min(Comparator.comparingDouble(entry -> entry.getValue().getSalary()))
+                .map(entry -> new Employeer(
+                        entry.getValue().getFirstName()
+                        , entry.getValue().getLastName()
+                        , entry.getValue().getDepartment()
+                        , entry.getValue().getSalary()))
+                .orElseThrow(() -> new DepartmentNotFoundException("Отдел с идентификатором " + id + " не найден"));
+
+        Employeer actualEmployeer = departmentServiceImpl.findEmployeeWithMaxSalaryByDepartment(id);
+        assertEquals(expEmployeerMin, actualEmployeer);
+    }
+
+    @Test
+    public void testFindEmployeeByDepartment() {
+        when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMapGroup);
+        List<Employeer> expEmployeerList = employeerMapGroup.values().stream()
+                .filter(employeer -> employeer.getDepartment() == id)
+                .collect(Collectors.toList());
+        List<Employeer> actualEmployee = departmentServiceImpl.findEmployeeByDepartment(id);
+        assertEquals(expEmployeerList, actualEmployee);
+
+    }
+
+    @Test
+    public void testFindAllEmployeeByDepartmentList() {
+        when(employeerServiceImpl.getEmployeers()).thenReturn(employeerMapGroup);
+        Map<Integer, List<Employeer>> expGroupMap = employeerMapGroup.values().stream()
+                .collect(Collectors.groupingBy(Employeer::getDepartment));
+        Map<Integer, List<Employeer>> actualGruop = departmentServiceImpl.getGroupListByDepartment();
+        assertEquals(expGroupMap, actualGruop);
+    }
 }

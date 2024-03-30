@@ -20,7 +20,7 @@ public class EmployeerServiceImpl implements EmployeerService {
             "Roy", new Employeer("Roy", "Jon", 2, 11578.45),
             "Kim", new Employeer("Kim", "Lu", 2, 18554.12)
     ));
-    private static final int MAX_EMPLOYEES = 10;
+    private static final int MAX_EMPLOYEES = 7;
 
     @Override
     public Employeer addEmployee(String firstname, String lastname, int department, double salary) {
@@ -29,14 +29,13 @@ public class EmployeerServiceImpl implements EmployeerService {
         lastname = StringUtils.capitalize(lastname);
         Employeer employeer = new Employeer(firstname, lastname, department, salary);
         if (employeers.size() >= MAX_EMPLOYEES) {
-            throw new EmployeeStrongeIsFullException();
+            throw new EmployeeStrongeIsFullException("Контейнер для сотрудников переполнен");
         }
         if (employeers.containsKey(firstname)) {
-            throw new EmployeeAlredyAddedException();
+            throw new EmployeeAlredyAddedException("Сотрудник уже существует");
         }
         employeers.put(firstname, employeer);
         return employeer;
-
     }
 
     @Override
@@ -46,7 +45,7 @@ public class EmployeerServiceImpl implements EmployeerService {
         if (employeers.containsKey(firstname)) {
             return employeers.remove(firstname);
         }
-        throw new EmployeeNotFoundException();
+        throw new EmployeeNotFoundException("Сотрудник не найден");
     }
 
     @Override
@@ -56,7 +55,7 @@ public class EmployeerServiceImpl implements EmployeerService {
         if (employeers.containsKey(firstName)) {
             return employeer;
         }
-        throw new EmployeeNotFoundException();
+        throw new EmployeeNotFoundException("Сотрудник не найден");
     }
 
     @Override
@@ -68,7 +67,7 @@ public class EmployeerServiceImpl implements EmployeerService {
     @Override
     public void validateInput(String firstName, String lastName) {
         if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) {
-            throw new BadRequestException();
+            throw new BadRequestException("Не допускается символы");
         }
     }
 

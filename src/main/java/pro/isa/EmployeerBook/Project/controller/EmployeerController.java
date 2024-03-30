@@ -1,15 +1,9 @@
 package pro.isa.EmployeerBook.Project.controller;
 
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 import pro.isa.EmployeerBook.Project.model.Employeer;
-import pro.isa.EmployeerBook.Project.exception.EmployeeAlredyAddedException;
-import pro.isa.EmployeerBook.Project.exception.EmployeeNotFoundException;
-import pro.isa.EmployeerBook.Project.exception.EmployeeStrongeIsFullException;
 import pro.isa.EmployeerBook.Project.service.EmployeerService;
-
 
 import java.util.Map;
 
@@ -22,19 +16,19 @@ public class EmployeerController {
         this.employeerService = employeerService;
     }
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<String> handleNotFound() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Сотрудник не найден");
+    @ExceptionHandler(HttpStatusCodeException.class)
+    public String handleNotFound(HttpStatusCodeException e) {
+        return "Code: " + e.getStatusCode() + "Error: " + e.getMessage();
     }
 
-    @ExceptionHandler(EmployeeAlredyAddedException.class)
-    public ResponseEntity<String> handleAlredyAdded() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Сотрудник уже существует");
+    @ExceptionHandler(HttpStatusCodeException.class)
+    public String handleAlredyAdded(HttpStatusCodeException e) {
+        return "Code: " + e.getStatusCode() + "Error: " + e.getMessage();
     }
 
-    @ExceptionHandler(EmployeeStrongeIsFullException.class)
-    public ResponseEntity<String> handleStrongelsFull() {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Контейнер для сотрудников переполнен");
+    @ExceptionHandler(HttpStatusCodeException.class)
+    public String handleStrongelsFull(HttpStatusCodeException e) {
+        return "Code: " + e.getStatusCode() + "Error: " + e.getMessage();
     }
 
     @GetMapping("/add")

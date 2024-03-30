@@ -69,7 +69,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return employeerServer.getEmployeers().values().stream()
                 .filter(employee -> employee.getDepartment() == departmentNumber)
                 .max(Comparator.comparingDouble(Employeer::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException());
+                .orElseThrow(() -> new EmployeeNotFoundException("Сотрудник не найден"));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         return employeerServer.getEmployeers().values().stream()
                 .filter(employeer -> employeer.getDepartment() == departmentNumber)
                 .min(Comparator.comparingDouble(Employeer::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException());
+                .orElseThrow(() -> new EmployeeNotFoundException("Сотрудник не найден"));
     }
 
     @Override
